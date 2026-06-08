@@ -60,7 +60,19 @@ export default async function DishDetailPage({ params }: Props) {
         {dish.arModelUrl ? (
           <div>
             <h2 className="mb-3 font-semibold">View on your table (AR)</h2>
-            <ARViewer src={dish.arModelUrl} alt={dish.name} poster={dish.imageUrl} scale={dish.arScale ?? 1} height={400} />
+            <ARViewer
+              src={dish.arModelUrl}
+              alt={dish.name}
+              poster={dish.imageUrl}
+              scale={dish.arScale ?? 1}
+              height={400}
+              nutrition={{
+                name: dish.name,
+                calories: dish.calories,
+                portion: dish.portion,
+                allergens: dish.allergens,
+              }}
+            />
           </div>
         ) : (
           <div className="rounded-2xl border border-dashed bg-white p-5 text-sm text-stone-600">AR preview not enabled for this dish.</div>

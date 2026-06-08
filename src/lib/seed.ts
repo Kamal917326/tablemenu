@@ -54,9 +54,8 @@ export const seedRestaurants: Record<string, Restaurant> = {
           "shallots",
         ],
         allergens: ["fish", "milk", "sulphur dioxide"],
-        arModelUrl:
-          "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Avocado/glTF-Binary/Avocado.glb",
-        arScale: 2.5,
+        arModelUrl: "/models/salmon.glb",
+        arScale: 1,
       },
       {
         id: "burger",
@@ -78,9 +77,8 @@ export const seedRestaurants: Record<string, Restaurant> = {
           "house sauce",
         ],
         allergens: ["milk", "cereals containing gluten", "eggs", "mustard"],
-        arModelUrl:
-          "https://threejs.org/examples/models/gltf/Hamburger.glb",
-        arScale: 0.35,
+        arModelUrl: "/models/burger.glb",
+        arScale: 1,
       },
       {
         id: "risotto",
@@ -102,9 +100,6 @@ export const seedRestaurants: Record<string, Restaurant> = {
           "truffle oil",
         ],
         allergens: ["milk", "sulphur dioxide"],
-        arModelUrl:
-          "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Avocado/glTF-Binary/Avocado.glb",
-        arScale: 3.2,
       },
       {
         id: "brownie",
@@ -126,6 +121,8 @@ export const seedRestaurants: Record<string, Restaurant> = {
           "vanilla ice cream",
         ],
         allergens: ["milk", "eggs", "cereals containing gluten"],
+        arModelUrl: "/models/brownie.glb",
+        arScale: 0.8,
       },
       {
         id: "espresso",
@@ -139,9 +136,6 @@ export const seedRestaurants: Record<string, Restaurant> = {
         portion: "60ml",
         ingredients: ["coffee beans", "water"],
         allergens: [],
-        arModelUrl:
-          "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/WaterBottle/glTF-Binary/WaterBottle.glb",
-        arScale: 0.8,
       },
     ],
   },

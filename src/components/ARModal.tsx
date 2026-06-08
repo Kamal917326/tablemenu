@@ -37,18 +37,13 @@ export function ARModal({ dish, onClose }: Props) {
             poster={dish.imageUrl}
             scale={dish.arScale ?? 1}
             height={360}
+            nutrition={{
+              name: dish.name,
+              calories: dish.calories,
+              portion: dish.portion,
+              allergens: dish.allergens,
+            }}
           />
-
-          <div className="mt-4 grid grid-cols-2 gap-3">
-            <div className="rounded-xl bg-stone-50 p-3">
-              <p className="text-xs text-stone-500">Calories</p>
-              <p className="font-semibold text-stone-900">{dish.calories} kcal</p>
-            </div>
-            <div className="rounded-xl bg-stone-50 p-3">
-              <p className="text-xs text-stone-500">Portion</p>
-              <p className="font-semibold text-stone-900">{dish.portion}</p>
-            </div>
-          </div>
 
           <div className="mt-3 rounded-xl bg-stone-50 p-3">
             <p className="text-xs text-stone-500">Ingredients</p>

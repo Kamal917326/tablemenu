@@ -1,6 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import {
+  ARNutritionOverlay,
+  type ARNutritionInfo,
+} from "@/components/ARNutritionOverlay";
 
 type Props = {
   src: string;
@@ -9,6 +13,7 @@ type Props = {
   scale?: number;
   height?: number;
   compact?: boolean;
+  nutrition?: ARNutritionInfo;
 };
 
 export function ARViewer({
@@ -18,6 +23,7 @@ export function ARViewer({
   scale = 1,
   height = 380,
   compact = false,
+  nutrition,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(true);
@@ -55,7 +61,8 @@ export function ARViewer({
 
         viewer.style.width = "100%";
         viewer.style.height = `${height}px`;
-        viewer.style.background = "linear-gradient(180deg, #1c1917 0%, #292524 100%)";
+        viewer.style.background =
+          "linear-gradient(180deg, #1c1917 0%, #292524 100%)";
 
         viewer.addEventListener("load", () => {
           if (!cancelled) setLoading(false);
@@ -88,6 +95,7 @@ export function ARViewer({
     <div className="overflow-hidden rounded-2xl border border-stone-200 bg-stone-900">
       <div className="relative">
         <div ref={containerRef} />
+        {nutrition && !error && <ARNutritionOverlay info={nutrition} />}
         {loading && !error && (
           <div
             className="absolute inset-0 flex items-center justify-center bg-stone-900/80 text-sm text-stone-300"
@@ -109,10 +117,12 @@ export function ARViewer({
         <div className="space-y-1 bg-stone-950 px-4 py-3 text-center text-xs text-stone-300">
           <p>
             Point your phone at the table and tap{" "}
-            <span className="font-semibold text-amber-400">View in your space</span>
+            <span className="font-semibold text-amber-400">
+              View in your space
+            </span>
           </p>
           <p className="text-stone-500">
-            Works on iPhone (Safari) and most Android browsers — no app needed
+            Calories &amp; allergens stay visible as text while in AR
           </p>
         </div>
       )}
