@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TableMenu
 
-## Getting Started
+Browser-based QR menus for London restaurants — no app download. Guests scan a table QR code, browse the menu on your server, filter UK allergens, and optionally preview signature dishes in AR on their phone.
 
-First, run the development server:
+## Features (MVP)
+
+- **QR → web menu** — `/r/{restaurant}/t/{table}` per table
+- **UK allergen filters** — hide dishes containing any of the 14 major allergens
+- **Dish detail** — ingredients, calories, portion size, allergen badges
+- **AR preview** — WebAR via `@google/model-viewer` for selected dishes (demo uses placeholder 3D models)
+- **Call waiter** — demo button (kitchen integration coming later)
+- **Landing page** — product pitch + link to live demo
+
+## Demo
+
+Demo restaurant: **The Copper Pot** (Shoreditch)
+
+- Home: `/`
+- Table 1 menu: `/r/copper-pot/t/1`
+- AR dish example: `/r/copper-pot/t/1/d/burger`
+
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Next.js 14 (App Router)
+- TypeScript + Tailwind CSS
+- `@google/model-viewer` for WebAR
 
-## Learn More
+## Roadmap
 
-To learn more about Next.js, take a look at the following resources:
+1. Restaurant admin dashboard (menu editor, QR generator)
+2. Database + multi-tenant auth (Supabase)
+3. Custom 3D dish models per restaurant
+4. Stripe subscriptions (GBP pricing)
+5. Analytics and sold-out toggles from admin
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Business model (planned)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Setup fee + monthly SaaS (£39–249/mo tiers)
+- AR as premium add-on with per-dish 3D modeling
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built solo in London. Pilot restaurants welcome.
