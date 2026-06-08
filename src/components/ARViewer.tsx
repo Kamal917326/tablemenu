@@ -24,24 +24,16 @@ function addHotspots(viewer: HTMLElement, nutrition: ARNutritionInfo) {
   calories.setAttribute("data-position", "0m 0.12m 0m");
   calories.setAttribute("data-normal", "0m 1m 0m");
   calories.className = "ar-hotspot-btn";
-  calories.innerHTML = `<div class="ar-hotspot-label ar-hotspot-calories">${nutrition.calories} kcal</div>`;
+  calories.innerHTML = `<div class="ar-hotspot-label">${nutrition.calories} kcal</div>`;
   viewer.appendChild(calories);
 
   const allergens = document.createElement("button");
   allergens.setAttribute("slot", "hotspot-allergens");
-  allergens.setAttribute("data-position", "0m 0.2m 0m");
+  allergens.setAttribute("data-position", "0m 0.18m 0m");
   allergens.setAttribute("data-normal", "0m 1m 0m");
   allergens.className = "ar-hotspot-btn";
   allergens.innerHTML = `<div class="ar-hotspot-label ar-hotspot-allergens">${allergenLabelText(nutrition.allergens)}</div>`;
   viewer.appendChild(allergens);
-
-  const portion = document.createElement("button");
-  portion.setAttribute("slot", "hotspot-portion");
-  portion.setAttribute("data-position", "0m 0.06m 0m");
-  portion.setAttribute("data-normal", "0m 1m 0m");
-  portion.className = "ar-hotspot-btn";
-  portion.innerHTML = `<div class="ar-hotspot-label ar-hotspot-portion">${nutrition.portion}</div>`;
-  viewer.appendChild(portion);
 }
 
 export function ARViewer({
@@ -144,10 +136,7 @@ export function ARViewer({
         <div className="relative">
           <div ref={containerRef} />
           {nutrition && !error && (
-            <>
-              <ARNutritionOverlay info={nutrition} variant="top" />
-              <ARNutritionOverlay info={nutrition} variant="bottom" />
-            </>
+            <ARNutritionOverlay info={nutrition} variant="bottom" />
           )}
           {loading && !error && (
             <div
@@ -168,12 +157,8 @@ export function ARViewer({
         </div>
         {!compact && (
           <div className="space-y-1 bg-stone-950 px-4 py-3 text-center text-xs text-stone-300">
-            <p>
-              Tap{" "}
-              <span className="font-semibold text-amber-400">
-                View in your space
-              </span>{" "}
-              — calories &amp; allergens stay on screen as text
+            <p className="text-stone-400">
+              Tap View in your space — plain text shows calories and allergens
             </p>
           </div>
         )}

@@ -1,0 +1,172 @@
+{
+  "copper-pot": {
+    "slug": "copper-pot",
+    "name": "The Copper Pot",
+    "tagline": "Modern British · Shoreditch",
+    "address": "42 Rivington Street, London EC2A 3DU",
+    "tableCount": 12,
+    "categories": [
+      {
+        "id": "starters",
+        "name": "Starters",
+        "sortOrder": 1
+      },
+      {
+        "id": "mains",
+        "name": "Mains",
+        "sortOrder": 2
+      },
+      {
+        "id": "desserts",
+        "name": "Desserts",
+        "sortOrder": 3
+      },
+      {
+        "id": "drinks",
+        "name": "Drinks",
+        "sortOrder": 4
+      }
+    ],
+    "dishes": [
+      {
+        "id": "soup",
+        "name": "Roasted Tomato Soup",
+        "description": "San Marzano tomatoes, basil oil, sourdough croutons.",
+        "pricePence": 750,
+        "categoryId": "starters",
+        "imageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&q=80",
+        "calories": 280,
+        "portion": "350ml bowl",
+        "ingredients": [
+          "tomatoes",
+          "onion",
+          "garlic",
+          "cream",
+          "basil",
+          "sourdough"
+        ],
+        "allergens": [
+          "milk",
+          "cereals containing gluten"
+        ]
+      },
+      {
+        "id": "salmon",
+        "name": "Pan-Seared Salmon",
+        "description": "Crisp skin salmon, heritage carrots, lemon beurre blanc.",
+        "pricePence": 1895,
+        "categoryId": "mains",
+        "imageUrl": "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=800&q=80",
+        "calories": 520,
+        "portion": "180g fillet + sides",
+        "ingredients": [
+          "salmon",
+          "butter",
+          "cream",
+          "white wine",
+          "carrots",
+          "lemon",
+          "shallots"
+        ],
+        "allergens": [
+          "fish",
+          "milk",
+          "sulphur dioxide"
+        ],
+        "arModelUrl": "/models/salmon.glb",
+        "arScale": 1
+      },
+      {
+        "id": "burger",
+        "name": "Copper Pot Burger",
+        "description": "Dry-aged beef, aged cheddar, brioche, house pickles.",
+        "pricePence": 1650,
+        "categoryId": "mains",
+        "imageUrl": "https://images.unsplash.com/photo-1568901347635-c89af620d937?w=800&q=80",
+        "calories": 890,
+        "portion": "220g patty",
+        "ingredients": [
+          "beef",
+          "brioche",
+          "cheddar",
+          "pickles",
+          "lettuce",
+          "tomato",
+          "house sauce"
+        ],
+        "allergens": [
+          "milk",
+          "cereals containing gluten",
+          "eggs",
+          "mustard"
+        ],
+        "arModelUrl": "/models/burger.glb",
+        "arScale": 1
+      },
+      {
+        "id": "risotto",
+        "name": "Wild Mushroom Risotto",
+        "description": "Arborio rice, porcini, parmesan, truffle oil.",
+        "pricePence": 1495,
+        "categoryId": "mains",
+        "imageUrl": "https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=800&q=80",
+        "calories": 610,
+        "portion": "320g serving",
+        "ingredients": [
+          "arborio rice",
+          "mushrooms",
+          "onion",
+          "white wine",
+          "parmesan",
+          "butter",
+          "truffle oil"
+        ],
+        "allergens": [
+          "milk",
+          "sulphur dioxide"
+        ]
+      },
+      {
+        "id": "brownie",
+        "name": "Dark Chocolate Brownie",
+        "description": "Valrhona chocolate, salted caramel, vanilla ice cream.",
+        "pricePence": 850,
+        "categoryId": "desserts",
+        "imageUrl": "https://images.unsplash.com/photo-1606313564200-e75d5e30476e?w=800&q=80",
+        "calories": 480,
+        "portion": "120g slice",
+        "ingredients": [
+          "dark chocolate",
+          "butter",
+          "eggs",
+          "flour",
+          "sugar",
+          "caramel",
+          "vanilla ice cream"
+        ],
+        "allergens": [
+          "milk",
+          "eggs",
+          "cereals containing gluten"
+        ],
+        "arModelUrl": "/models/brownie.glb",
+        "arScale": 0.8
+      },
+      {
+        "id": "espresso",
+        "name": "Double Espresso",
+        "description": "Single-origin blend, roasted in Hackney.",
+        "pricePence": 320,
+        "categoryId": "drinks",
+        "imageUrl": "https://images.unsplash.com/photo-1514432324607-09a988783f4c?w=800&q=80",
+        "calories": 5,
+        "portion": "60ml",
+        "ingredients": [
+          "coffee beans",
+          "water"
+        ],
+        "allergens": []
+      }
+    ]
+  }
+}
