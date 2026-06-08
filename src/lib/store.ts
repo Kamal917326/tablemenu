@@ -72,6 +72,53 @@ export async function updateDish(
   return restaurant;
 }
 
+export async function addDish(
+  slug: string,
+  dish: Dish
+): Promise<Restaurant | null> {
+  const all = await ensureStore();
+  const restaurant = all[slug];
+  if (!restaurant) return null;
+
+  if (restaurant.dishes.some((d) => d.id === dish.id)) {
+    return null;
+  }
+
+  restaurant.dishes.push(dish);
+  all[slug] = restaurant;
+
+  try {
+    await saveAll(all);
+  } catch {
+    // same as updateDish
+  }
+
+  return restaurant;
+}
+
+export async function deleteDish(
+  slug: string,
+  dishId: string
+): Promise<Restaurant | null> {
+  const all = await ensureStore();
+  const restaurant = all[slug];
+  if (!restaurant) return null;
+
+  const next = restaurant.dishes.filter((d) => d.id !== dishId);
+  if (next.length === restaurant.dishes.length) return null;
+
+  restaurant.dishes = next;
+  all[slug] = restaurant;
+
+  try {
+    await saveAll(all);
+  } catch {
+    // same as updateDish
+  }
+
+  return restaurant;
+}
+
 export function getDish(
   restaurant: Restaurant,
   dishId: string
