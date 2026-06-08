@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
+  allergenLabelText,
   ARNutritionOverlay,
   type ARNutritionInfo,
 } from "@/components/ARNutritionOverlay";
@@ -16,6 +18,32 @@ type Props = {
   nutrition?: ARNutritionInfo;
 };
 
+function addHotspots(viewer: HTMLElement, nutrition: ARNutritionInfo) {
+  const calories = document.createElement("button");
+  calories.setAttribute("slot", "hotspot-calories");
+  calories.setAttribute("data-position", "0m 0.12m 0m");
+  calories.setAttribute("data-normal", "0m 1m 0m");
+  calories.className = "ar-hotspot-btn";
+  calories.innerHTML = `<div class="ar-hotspot-label ar-hotspot-calories">${nutrition.calories} kcal</div>`;
+  viewer.appendChild(calories);
+
+  const allergens = document.createElement("button");
+  allergens.setAttribute("slot", "hotspot-allergens");
+  allergens.setAttribute("data-position", "0m 0.2m 0m");
+  allergens.setAttribute("data-normal", "0m 1m 0m");
+  allergens.className = "ar-hotspot-btn";
+  allergens.innerHTML = `<div class="ar-hotspot-label ar-hotspot-allergens">${allergenLabelText(nutrition.allergens)}</div>`;
+  viewer.appendChild(allergens);
+
+  const portion = document.createElement("button");
+  portion.setAttribute("slot", "hotspot-portion");
+  portion.setAttribute("data-position", "0m 0.06m 0m");
+  portion.setAttribute("data-normal", "0m 1m 0m");
+  portion.className = "ar-hotspot-btn";
+  portion.innerHTML = `<div class="ar-hotspot-label ar-hotspot-portion">${nutrition.portion}</div>`;
+  viewer.appendChild(portion);
+}
+
 export function ARViewer({
   src,
   alt,
@@ -28,6 +56,10 @@ export function ARViewer({
   const containerRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [inAR, setInAR] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     let viewer: HTMLElement | null = null;
@@ -36,6 +68,7 @@ export function ARViewer({
     async function mountViewer() {
       setLoading(true);
       setError(false);
+      setInAR(false);
 
       try {
         await import("@google/model-viewer");
@@ -64,6 +97,10 @@ export function ARViewer({
         viewer.style.background =
           "linear-gradient(180deg, #1c1917 0%, #292524 100%)";
 
+        if (nutrition) {
+          addHotspots(viewer, nutrition);
+        }
+
         viewer.addEventListener("load", () => {
           if (!cancelled) setLoading(false);
         });
@@ -72,6 +109,15 @@ export function ARViewer({
             setError(true);
             setLoading(false);
           }
+        });
+        viewer.addEventListener("ar-status", (event) => {
+          const detail = (event as CustomEvent).detail as {
+            status?: string;
+          };
+          const active =
+            detail.status === "session-started" ||
+            detail.status === "object-placed";
+          if (!cancelled) setInAR(active);
         });
 
         containerRef.current.appendChild(viewer);
@@ -87,45 +133,59 @@ export function ARViewer({
 
     return () => {
       cancelled = true;
+      setInAR(false);
       viewer?.remove();
     };
-  }, [src, alt, poster, scale, height]);
+  }, [src, alt, poster, scale, height, nutrition]);
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-stone-200 bg-stone-900">
-      <div className="relative">
-        <div ref={containerRef} />
-        {nutrition && !error && <ARNutritionOverlay info={nutrition} />}
-        {loading && !error && (
-          <div
-            className="absolute inset-0 flex items-center justify-center bg-stone-900/80 text-sm text-stone-300"
-            style={{ height }}
-          >
-            Loading 3D model…
-          </div>
-        )}
-        {error && (
-          <div
-            className="absolute inset-0 flex items-center justify-center bg-stone-900 px-6 text-center text-sm text-red-300"
-            style={{ height }}
-          >
-            Could not load AR model. Check the model URL in admin.
+    <>
+      <div className="overflow-hidden rounded-2xl border border-stone-200 bg-stone-900">
+        <div className="relative">
+          <div ref={containerRef} />
+          {nutrition && !error && (
+            <>
+              <ARNutritionOverlay info={nutrition} variant="top" />
+              <ARNutritionOverlay info={nutrition} variant="bottom" />
+            </>
+          )}
+          {loading && !error && (
+            <div
+              className="absolute inset-0 flex items-center justify-center bg-stone-900/80 text-sm text-stone-300"
+              style={{ height }}
+            >
+              Loading 3D model…
+            </div>
+          )}
+          {error && (
+            <div
+              className="absolute inset-0 flex items-center justify-center bg-stone-900 px-6 text-center text-sm text-red-300"
+              style={{ height }}
+            >
+              Could not load AR model. Add your .glb file to public/models/
+            </div>
+          )}
+        </div>
+        {!compact && (
+          <div className="space-y-1 bg-stone-950 px-4 py-3 text-center text-xs text-stone-300">
+            <p>
+              Tap{" "}
+              <span className="font-semibold text-amber-400">
+                View in your space
+              </span>{" "}
+              — calories &amp; allergens stay on screen as text
+            </p>
           </div>
         )}
       </div>
-      {!compact && (
-        <div className="space-y-1 bg-stone-950 px-4 py-3 text-center text-xs text-stone-300">
-          <p>
-            Point your phone at the table and tap{" "}
-            <span className="font-semibold text-amber-400">
-              View in your space
-            </span>
-          </p>
-          <p className="text-stone-500">
-            Calories &amp; allergens stay visible as text while in AR
-          </p>
-        </div>
-      )}
-    </div>
+
+      {mounted &&
+        inAR &&
+        nutrition &&
+        createPortal(
+          <ARNutritionOverlay info={nutrition} variant="ar-hud" />,
+          document.body
+        )}
+    </>
   );
 }
