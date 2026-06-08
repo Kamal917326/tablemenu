@@ -3,23 +3,38 @@ import path from "path";
 import type { Dish, Restaurant } from "./types";
 import { seedRestaurants } from "./seed";
 
-const DATA_DIR = path.join(process.cwd(), "data");
-const DATA_PATH = path.join(DATA_DIR, "restaurants.json");
+const BUNDLED_DATA_PATH = path.join(process.cwd(), "data", "restaurants.json");
+const RUNTIME_DATA_PATH =
+  process.env.VERCEL === "1"
+    ? path.join("/tmp", "tablemenu-restaurants.json")
+    : BUNDLED_DATA_PATH;
 
-async function ensureStore(): Promise<Record<string, Restaurant>> {
+async function readBundledData(): Promise<Record<string, Restaurant>> {
   try {
-    const raw = await fs.readFile(DATA_PATH, "utf-8");
+    const raw = await fs.readFile(BUNDLED_DATA_PATH, "utf-8");
     return JSON.parse(raw) as Record<string, Restaurant>;
   } catch {
-    await fs.mkdir(DATA_DIR, { recursive: true });
-    await fs.writeFile(DATA_PATH, JSON.stringify(seedRestaurants, null, 2));
     return structuredClone(seedRestaurants);
   }
 }
 
+async function ensureStore(): Promise<Record<string, Restaurant>> {
+  try {
+    const raw = await fs.readFile(RUNTIME_DATA_PATH, "utf-8");
+    return JSON.parse(raw) as Record<string, Restaurant>;
+  } catch {
+    const data = await readBundledData();
+    try {
+      await fs.writeFile(RUNTIME_DATA_PATH, JSON.stringify(data, null, 2));
+    } catch {
+      // Read-only filesystem — demo still works from bundled seed data.
+    }
+    return data;
+  }
+}
+
 async function saveAll(data: Record<string, Restaurant>): Promise<void> {
-  await fs.mkdir(DATA_DIR, { recursive: true });
-  await fs.writeFile(DATA_PATH, JSON.stringify(data, null, 2));
+  await fs.writeFile(RUNTIME_DATA_PATH, JSON.stringify(data, null, 2));
 }
 
 export async function getAllRestaurants(): Promise<Record<string, Restaurant>> {
@@ -47,7 +62,13 @@ export async function updateDish(
 
   restaurant.dishes[index] = { ...restaurant.dishes[index], ...patch };
   all[slug] = restaurant;
-  await saveAll(all);
+
+  try {
+    await saveAll(all);
+  } catch {
+    // Admin edits may not persist on read-only hosts; menu still updates in memory for this request.
+  }
+
   return restaurant;
 }
 
@@ -56,16 +77,4 @@ export function getDish(
   dishId: string
 ): Dish | undefined {
   return restaurant.dishes.find((d) => d.id === dishId);
-}
-
-export function formatPrice(pence: number): string {
-  return `£${(pence / 100).toFixed(2)}`;
-}
-
-export function getMenuUrl(slug: string, tableId: string, baseUrl: string) {
-  return `${baseUrl.replace(/\/$/, "")}/r/${slug}/t/${tableId}`;
-}
-
-export function getQrImageUrl(menuUrl: string, size = 280): string {
-  return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(menuUrl)}`;
 }

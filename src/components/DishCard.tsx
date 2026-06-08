@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { ARModal } from "@/components/ARModal";
 import { AllergenBadges } from "@/components/AllergenBadges";
-import { formatPrice } from "@/lib/data";
+import { formatPrice } from "@/lib/format";
 import type { Dish } from "@/lib/types";
 
 type Props = {

@@ -37,6 +37,25 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000)
 
+## Deploy (Vercel — free demo URL)
+
+1. Push this repo to GitHub
+2. Go to [vercel.com/new](https://vercel.com/new) → Import **Kamal917326/tablemenu**
+3. Click **Deploy** (no env vars needed)
+4. Your live demo will be at `https://tablemenu-xxx.vercel.app`
+
+**Demo links to share with customers:**
+
+- Menu: `https://YOUR-URL/r/copper-pot/t/1`
+- AR burger: `https://YOUR-URL/r/copper-pot/t/1/d/burger`
+- Admin: `https://YOUR-URL/admin/copper-pot`
+
+Or from CLI:
+
+```bash
+npx vercel --prod
+```
+
 ## Stack
 
 - Next.js 14 (App Router)

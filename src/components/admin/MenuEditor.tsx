@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { formatPrice } from "@/lib/data";
+import { formatPrice } from "@/lib/format";
 import type { Dish, Restaurant } from "@/lib/types";
 
 export function MenuEditor({ restaurant, onUpdate }: { restaurant: Restaurant; onUpdate: (r: Restaurant) => void }) {

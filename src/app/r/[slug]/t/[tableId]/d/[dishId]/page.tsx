@@ -3,7 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ARViewer } from "@/components/ARViewer";
 import { AllergenBadges } from "@/components/AllergenBadges";
-import { formatPrice, getDish, getRestaurant } from "@/lib/store";
+import { formatPrice } from "@/lib/format";
+import { getDish, getRestaurant } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 

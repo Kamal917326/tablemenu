@@ -1,6 +1,6 @@
 "use client";
 
-import { getMenuUrl, getQrImageUrl } from "@/lib/data";
+import { getMenuUrl, getQrImageUrl } from "@/lib/format";
 import type { Restaurant } from "@/lib/types";
 
 type Props = {
