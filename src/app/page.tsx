@@ -26,10 +26,10 @@ export default function HomePage() {
             Open demo menu (Table 1)
           </Link>
           <Link
-            href="/admin"
+            href="/admin/copper-pot"
             className="inline-flex items-center justify-center rounded-full border border-stone-700 px-8 py-4 text-sm font-semibold text-white transition hover:border-stone-500"
           >
-            Restaurant admin (preview)
+            Restaurant admin
           </Link>
         </div>
 

@@ -29,6 +29,7 @@ export type Dish = {
   ingredients: string[];
   allergens: Allergen[];
   arModelUrl?: string;
+  arScale?: number;
   soldOut?: boolean;
 };
 

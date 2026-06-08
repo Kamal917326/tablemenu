@@ -7,8 +7,17 @@ Browser-based QR menus for London restaurants — no app download. Guests scan a
 - **QR → web menu** — `/r/{restaurant}/t/{table}` per table
 - **UK allergen filters** — hide dishes containing any of the 14 major allergens
 - **Dish detail** — ingredients, calories, portion size, allergen badges
-- **AR preview** — WebAR via `@google/model-viewer` for selected dishes (demo uses placeholder 3D models)
+- **AR preview** — WebAR via `@google/model-viewer`; tap **View on table** from menu or dish page
+- **Admin dashboard** — `/admin/copper-pot` — edit menu, generate QR codes, manage AR models
 - **Call waiter** — demo button (kitchen integration coming later)
+
+## Admin
+
+Open [http://localhost:3000/admin/copper-pot](http://localhost:3000/admin/copper-pot)
+
+- **Menu** — mark sold out, update prices
+- **QR codes** — download per-table QR codes
+- **AR models** — assign 3D models per dish, adjust scale, custom .glb URLs
 - **Landing page** — product pitch + link to live demo
 
 ## Demo

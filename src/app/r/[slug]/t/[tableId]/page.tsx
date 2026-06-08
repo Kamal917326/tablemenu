@@ -1,24 +1,17 @@
 import { notFound } from "next/navigation";
 import { MenuView } from "@/components/MenuView";
-import { getRestaurant } from "@/lib/data";
+import { getRestaurant } from "@/lib/store";
 
-type Props = {
-  params: { slug: string; tableId: string };
-};
+export const dynamic = "force-dynamic";
 
-export default function TableMenuPage({ params }: Props) {
-  const restaurant = getRestaurant(params.slug);
+type Props = { params: { slug: string; tableId: string } };
 
-  if (!restaurant) {
-    notFound();
-  }
+export default async function TableMenuPage({ params }: Props) {
+  const restaurant = await getRestaurant(params.slug);
+  if (!restaurant) notFound();
 
   const tableNum = Number.parseInt(params.tableId, 10);
-  if (
-    Number.isNaN(tableNum) ||
-    tableNum < 1 ||
-    tableNum > restaurant.tableCount
-  ) {
+  if (Number.isNaN(tableNum) || tableNum < 1 || tableNum > restaurant.tableCount) {
     notFound();
   }
 
